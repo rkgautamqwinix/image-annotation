@@ -22,7 +22,7 @@ function Content (props) {
       style={{
         position: 'absolute',
         left: `${geometry.x}%`,
-        top: `${geometry.y + geometry.height}%`,
+        top: `${geometry.y}%`,  //geometry.y + geometry.height
         ...props.style
       }}
       className={props.className}
