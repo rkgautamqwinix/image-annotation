@@ -1,7 +1,7 @@
 {
   "name": "react-image-annotation",
   "version": "0.9.9",
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "description": "react-image-annotation React component",
   "author": "Arian Allenson Valdez <arianallensonv@gmail.com> (http://arianv.com/)",
   "main": "lib/index.js",
