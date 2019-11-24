@@ -57,6 +57,7 @@ function Editor (props) {
         onUpdate={props.onUpdate}
         onDelete={props.onDelete}
         value={props.annotation.data && props.annotation.data.text}
+        disabledInput={props.disabledInput}
       />
     </Container>
   )
