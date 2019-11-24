@@ -56,13 +56,14 @@ export default {
         return null
     }
   },
-  renderEditor: ({ annotation, onChange, onCreate, onUpdate, onDelete }) => (
+  renderEditor: ({ annotation, onChange, onCreate, onUpdate, onDelete, disabledInput }) => (
     <Editor
       annotation={annotation}
       onChange={onChange}
       onCreate={onCreate}
       onUpdate={onUpdate}
       onDelete={onDelete}
+      disabledInput={disabledInput}
     />
   ),
   renderHighlight: ({ key, annotation, active, selectAnnotation }) => {
