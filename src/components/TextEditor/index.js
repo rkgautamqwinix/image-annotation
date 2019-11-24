@@ -1,79 +1,8 @@
-// import React from 'react'
-// import styled, { keyframes } from 'styled-components'
-
-// const Inner = styled.div`
-//   padding: 8px 16px;
-
-//   textarea {
-//     border: 0;
-//     font-size: 14px;
-//     margin: 6px 0;
-//     min-height: 60px;
-//     outline: 0;
-//   }
-// `
-
-// const Button = styled.div`
-//   background: whitesmoke;
-//   border: 0;
-//   box-sizing: border-box;
-//   color: #363636;
-//   cursor: pointer;
-//   font-size: 1rem;
-//   margin: 0;
-//   outline: 0;
-//   padding: 8px 16px;
-//   text-align: center;
-//   text-shadow: 0 1px 0 rgba(0,0,0,0.1);
-//   width: 100%;
-//   display: inline-block;
-
-//   transition: background 0.21s ease-in-out;
-
-//   &:focus, &:hover {
-//     background: #eeeeee;
-//   }
-// `
-
-// function TextEditor (props) {
-//   let button = null;
-
-//   if (props.isUpdate) {
-//     const width = (!props.onUpdate != !props.onDelete) ? '100%' : '50%'; // logical XOR
-//     button = (
-//     <div>
-//       {props.onUpdate && <Button onClick={()=>props.onUpdate(props.annotation)} style={{width: width}}>Update</Button>}
-//       {props.onDelete && <Button onClick={()=>props.onDelete(props.annotation)} style={{width: width}}>Delete</Button>}
-//     </div>
-//       );
-//   } else {
-//     button = (<Button onClick={props.onSubmit}>Submit</Button>)
-//   }
-//   return (
-//     <React.Fragment>
-//       <Inner>
-//         <textarea
-//           placeholder='Write description'
-//           onFocus={props.onFocus}
-//           onBlur={props.onBlur}
-//           onChange={props.onChange}
-//           value={props.value}
-//         >
-//         </textarea>
-//       </Inner>
-//       {props.value && button}
-//     </React.Fragment>
-//   )
-// }
-
-// export default TextEditor
-
-
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
 const Inner = styled.div`
-  padding: 8px 16px;
+  padding: 7px 7px;
   textarea {
     border: 0;
     font-size: 14px;
@@ -107,46 +36,56 @@ const Inner = styled.div`
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding: 9px;
   }
 `
-
+const disabled = {
+  background : '#ccc'
+}
 const Button = styled.div`
-  background: whitesmoke;
-  border: 0;
-  box-sizing: border-box;
-  color: #363636;
-  cursor: pointer;
-  font-size: 1rem;
-  margin: 0;
-  outline: 0;
-  padding: 8px 16px;
+  background-color: #008CBA; /* Green */
+  border: none;
+  color: white;
+  padding: 7px 7px;
   text-align: center;
-  text-shadow: 0 1px 0 rgba(0,0,0,0.1);
-  width: 100%;
+  text-decoration: none;
   display: inline-block;
-  transition: background 0.21s ease-in-out;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
   &:focus, &:hover {
-    background: #eeeeee;
+    background: #046888;
+  }
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 `
-
 function TextEditor (props) {
   let button = null;
 
-  if (props.isUpdate) {
-    const width = (!props.onUpdate != !props.onDelete) ? '100%' : '50%'; // logical XOR
+  if (props.isUpdate && !props.disabledInput) {
+    const width = (!props.onUpdate != !props.onDelete) ? '100%' : '34%'; // logical XOR
     button = (
-    <div>
-      {props.onUpdate && <Button onClick={()=>props.onUpdate(props.annotation)} style={{width: width}}>Update</Button>}
-      {props.onDelete && <Button onClick={()=>props.onDelete(props.annotation)} style={{width: width}}>Delete</Button>}
-    </div>
-      );
+      <div>
+        {props.onUpdate && <Button onClick={()=>props.onUpdate(props.annotation)} style={{width: width}}>Update</Button>}
+        {props.onDelete && <Button onClick={()=>props.onDelete(props.annotation)} style={{width: width}}>Delete</Button>}
+      </div>
+    );
+  } else if (props.isUpdate && props.onDelete && props.disabledInput){
+    button = (<Button onClick={()=>props.onDelete(props.annotation)} 
+                      style={{display: 'inline', marginRight: '10px'}}
+                      >Delete</Button>)
   } else {
-    button = (<Button onClick={props.onSubmit} style={{display: 'inline', marginRight: '10px'}}>Submit</Button>)
+    button = (<Button onClick={
+                  (
+                    (props.value && props.value.trim() != "") || 
+                    (props.disabledInput && props.disabledInput.toString().trim() !="")
+                  ) && props.onSubmit
+                } 
+                disabled={!props.value} 
+                style={{display: 'inline', marginRight: '10px'}}>Submit</Button>)
   }
 
   return (
@@ -159,9 +98,14 @@ function TextEditor (props) {
           onBlur={props.onBlur}
           onChange={props.onChange}
           value={props.value}
+          style={props.disabledInput && disabled}
+          disabled={props.disabledInput}
+          defaultValue={props.disabledInput}
         />
       </Inner>
-      {props.value && button}
+      <span style={{textAlign : 'center'}}>
+        {button}
+      </span>
     </React.Fragment>
   )
 }
