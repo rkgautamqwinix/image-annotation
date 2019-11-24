@@ -1,5 +1,5 @@
 {
-  "name": "react-image-annotation",
+  "name": "image-annotation",
   "version": "0.9.9",
   "description": "react-image-annotation React component",
   "author": "Arian Allenson Valdez <arianallensonv@gmail.com> (http://arianv.com/)",
@@ -63,7 +63,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rkgautamqwinix/image-annotation"
+    "url": "https://github.com/Secretmapper/react-image-annotation""
   },
   "keywords": [
     "react-component"
