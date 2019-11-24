@@ -56,6 +56,7 @@ declare module "react-image-annotation" {
     activeAnnotations?: IAnnotation[];
 
     disableAnnotation?: boolean;
+    disabledInput?: boolean;
     disableSelector?: boolean;
     renderSelector?: (
       { annotation, active }: { annotation: IAnnotation; active: boolean }
