@@ -90,6 +90,7 @@ export default compose(
     renderSelector: T.func,
     disableEditor: T.bool,
     renderEditor: T.func,
+    disabledInput: T.string,
 
     renderHighlight: T.func.isRequired,
     renderContent: T.func.isRequired,
@@ -167,11 +168,28 @@ export default compose(
   onClick = (e) => this.callSelectorMethod('onClick', e)
 
   onCreate = () => {
+    let annotation = {
+      ...this.props.value
+    }
+    if (this.props.value && 
+        this.props.disabledInput && 
+        ( 
+          (this.props.value.data && !this.props.value.data.text) || 
+          !this.props.value.data
+        ) 
+    ){
+      annotation = {
+        ...annotation,
+        data : {
+          text : this.props.disabledInput
+        }
+      }
+    }
     if ('onCreate' in this.props) {
-      this.props.onCreate(this.props.value);
+      this.props.onCreate(annotation);
     } else {
       // deprecate onSubmit for more explicit 'onCreate' name
-      this.props.onSubmit(this.props.value);
+      this.props.onSubmit(annotation);
     }
   }
 
@@ -305,7 +323,8 @@ export default compose(
                     onChange: props.onChange,
                     onCreate: this.onCreate,
                     onUpdate: props.onUpdate,
-                    onDelete: props.onDelete
+                    onDelete: props.onDelete,
+                    disabledInput : props.disabledInput
                   })
               )
         }
