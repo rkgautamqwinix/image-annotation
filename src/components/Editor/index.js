@@ -33,13 +33,19 @@ function Editor (props) {
   if (!geometry) return null
   var topPosition = geometry.y + geometry.height;
   topPosition = topPosition > 80 ? 80 : topPosition;
+  
+  let leftPosition = geometry.width < 288 && geometry.x + geometry.width > 85 ? {
+                                  right : `0%`
+                                } : {
+                                  left: `${geometry.x}%`
+                                }
   return (
     <Container
       className={props.className}
       style={{
         position: 'absolute',
-        left: `${geometry.x}%`,
         top: `${topPosition}%`,
+        ...leftPosition,
         ...props.style
       }}
     >
